@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Share File</title>
+    <link rel="icon" type="image/png" href="images/file-sharing.png">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/share-file.css}">
+    <link rel="icon" th:href="@{/images/ShareSwift-logo.png}">
+</head>
+<body>
+
+<div class="container">
+    <div class="box">
+        <h1>Download Your File</h1>
+        <p>File Name: <strong th:text="${file.fileName}"></strong></p>
+        <p>Uploaded By: <strong th:text="${file.uploadedBy}"></strong></p>
+        <form th:action="@{/files/download/{id}(id=${file.fileId})}">
+            <button type="submit" class="btn download-button">
+                <i class="fas fa-download"></i> Download File
+            </button>
+        </form>
+    </div>
+
+    <div class="box mt-4">
+        <h2>Share This Page</h2>
+        <p>URL: <input type="text" id="shareUrl" class="form-control" th:value="${url}" readonly/></p>
+        <button class="btn copy-button" onclick="copyToClipboard()">
+            <i class="fas fa-copy"></i> Copy URL
+        </button>
+    </div>
+
+    <a href="/files/home" class="back-link">Back to File List</a>
+</div>
+
+<script th:src="@{/js/share-file.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

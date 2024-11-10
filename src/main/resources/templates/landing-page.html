@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link th:href="@{/css/landing-page.css}" rel="stylesheet" />
+    <link rel="icon" th:href="@{/images/ShareSwift-logo.png}">
+
+    <style >
+    *:before,*:after{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+
+<body>
+<!-- <nav>
+    <div class="logo">
+        <p>LOGO</p>
+    </div>
+</nav> -->
+<div class="header-test">
+    <h1 class="header-title">File Sharing App</h1>
+    <h3 class="header-line">Effortless Sharing, Boundless Possibilities</h3>
+</div>
+
+<main>
+    <div class="animation-container">
+        <!-- Images of computers -->
+
+        <img th:src="@{/images/leftpc.png}" alt="Left Computer" class="computer left-computer">
+
+
+        <div class="paper-airplane"></div>
+        <img th:src="@{/images/rightpc.png}" alt="Right Computer" class="computer right-computer">
+        <!-- Dotted path -->
+        <div class="dotted-path"></div>
+    </div>
+    <!-- <p>Effortlessly share files from one device to another.</p> -->
+</main>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+
+<div class="card-container">
+    <div class="card">
+
+        <!-- <div class="card-front">
+            <h3>About</h3><br>
+            <p>Welcome to our innovative file-sharing platform, designed to make transferring files between devices effortless and secure. Whether you're sending documents, photos, videos, or any other type of file, our app provides a seamless experience tailored to your needs.</p>
+            <p>Key Features:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔸Fast and Secure Transfers<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔸User-Friendly Interface<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔸Cross-Platform Compatibility<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔸No Size Limits<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔸Real-Time Collaboration<br><br>
+                Discover a new way of sharing files with convenience and security. Join us and start sharing smarter today!</p>
+            <button class="login-btn">Login</button>
+
+        </div> -->
+        <div class="card-login">
+            <form action="/login" method="post">
+                <h3>Login Here</h3>
+                <label for="username">Email</label>
+                <input type="email" placeholder="Email" id="username" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" placeholder="Password" id="password" name="password" required>
+                <button type="submit">Log In</button>
+            </form>
+
+            <div class="social">
+                <a href="/oauth2/authorization/google" class="go"><i class="fab fa-google"></i> Google</a>
+                <a href="/oauth2/authorization/github" class="gitHub"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+            <div class="register-btn">*New User ?</div>
+
+        </div>
+
+        <div class="card-register">
+            <form th:action="@{/register}" method="post" id="register-form">
+                <h3>Register Here</h3>
+                <label for="username">Username</label>
+                <input type="text" placeholder="Username" id="register-username" name="username" required>
+
+                <label for="userEmail">Email</label>
+                <input type="email" placeholder="Email" id="register-email" name="userEmail" required>
+
+                <label for="password">Password</label>
+                <input type="password" placeholder="Password" id="register-password" name="userPassword" required>
+
+                <input type="text" name="userType" id="userType" value="local" hidden>
+                <button type="submit">register</button>
+            </form>
+            
+            <p class="login-btn">*Existing User ?</p>
+        </div>
+    </div>
+</div>
+
+<div class="popup" id="errorPopup"></div>
+
+<script th:src="@{/js/landing-page.js}"></script>
+
+</body>
+</html>

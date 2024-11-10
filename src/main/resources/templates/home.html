@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="icon" th:href="@{/images/ShareSwift-logo.png}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">File Sharing Manager</a>
+        <form th:action="@{/logout}" method="post" class="ml-auto">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="upload-title">Upload Your File</h2>
+
+                        <!-- Form for file upload -->
+                        <form action="/files/upload" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+                            <div class="form-group text-center">
+                                <div class="drag-drop-area" id="dragDropArea">
+                                    <i class="fas fa-cloud-upload-alt fa-5x"></i>
+                                    <p>Drag & Drop your files here or</p>
+                                    <input type="file" id="file-upload" name="files" class="form-control-file" required multiple />
+                                    <label for="file-upload" class="btn btn-primary mt-3">Choose Files</label>
+                                </div>
+                                <span id="file-name" class="file-name">No files chosen</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="uploadedBy" id="uploadedBy" class="form-control" placeholder="Uploaded By" th:value="${name}" required />
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">Upload Files</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="upload-title">Uploaded Files</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Uploaded By</th>
+                                    <th>Share Link</th>
+                                    <th>Delete File</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fileTableBody">
+                                <tr th:each="file : ${files}">
+                                    <td th:text="${file.fileName}">File Name</td>
+                                    <td th:text="${file.uploadedBy}">Uploaded By</td>
+                                    <td>
+                                        <form th:action="@{/files/share/{id}(id=${file.fileId})}">
+                                            <button type="submit" class="btn btn-info"><i class="fas fa-share-alt"></i></button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{/files/delete/{id}(id=${file.fileId})}" method="post">
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:if="${files.size() > 4}" class="alert alert-info">Scroll to see more files</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="display: none;">
+    <div id="loadingContent">
+        <!-- Close (Cancel) Icon at top right corner -->
+        <span id="closeUpload" class="close-btn">&times;</span>
+        
+        <h4>Uploading...</h4>
+        
+        <!-- Circular progress bar -->
+        <svg width="100" height="100" viewBox="0 0 100 100" class="circular-progress">
+            <circle class="circle-bg" cx="50" cy="50" r="45" stroke="#f3f3f3" stroke-width="10" fill="none" />
+            <circle id="progress-circle" class="circle-progress" cx="50" cy="50" r="45" stroke="#4caf50" stroke-width="10" fill="none" stroke-dasharray="283" stroke-dashoffset="283" />
+        </svg>
+        
+        <!-- Progress percentage text -->
+        <div id="progress-text" class="progress-text">0%</div>
+    </div>
+</div>
+
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/home.js}"></script>
+</body>
+</html>
